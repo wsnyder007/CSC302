@@ -44,13 +44,7 @@ void got_packet(u_char *args, const struct pcap_pkthdr *header,
                            (packet + sizeof(struct ethheader)); 
 
     printf("       From: %s\n", inet_ntoa(ip->iph_sourceip));  
-    printf("         To: %s\n", inet_ntoa(ip->iph_destip));
-    
-    struct udpheader *udp = (struct udpheader *)
-                        (packet + sizeof(struct ethheader) + sizeof(struct ipheader));
-    char *msg = malloc(udp->udp_ulen * sizeof(char));
-    msg = packet +  sizeof(struct ethheader) + sizeof(struct ipheader) + sizeof(struct udpheader);
-    printf(" Message: %s\n", msg);
+    printf("         To: %s\n", inet_ntoa(ip->iph_destip));        
 
     /* determine protocol */
     switch(ip->iph_protocol) {                               
@@ -59,6 +53,11 @@ void got_packet(u_char *args, const struct pcap_pkthdr *header,
             return;
         case IPPROTO_UDP:
             printf("   Protocol: UDP\n");
+            struct udpheader *udp = (struct udpheader *)
+                        (packet + sizeof(struct ethheader) + sizeof(struct ipheader));
+            char *msg = malloc(udp->udp_ulen * sizeof(char));
+            msg = packet +  sizeof(struct ethheader) + sizeof(struct ipheader) + sizeof(struct udpheader);
+            printf(" Message: %s\n", msg);
             return;
         case IPPROTO_ICMP:
             printf("   Protocol: ICMP\n");
