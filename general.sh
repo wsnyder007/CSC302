@@ -2,7 +2,6 @@
 set -x
 sudo apt-get -y update
 sudo apt-get -y install nmap
-sudo git clone https://github.com/secdev/scapy.git /local/repository
 sudo ufw allow 9090
 sudo ufw allow 9999
 wget https://repo.anaconda.com/archive/Anaconda3-5.3.0-Linux-x86_64.sh
